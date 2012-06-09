@@ -5,9 +5,8 @@ if (!defined('BASEPATH'))
  * Custom model with auto bdd synchro
  * 
  * @author benjamin herbomez <benjamin.herbomez@gmail.com>
- * @example :   extends this class and in your constructor use : 
- *   public function __construct() {
- *       parent::__construct();
+ * @example :   extends this class and redefine config function : 
+ *   protected function config() {
  *       $this->tblName = 'users';
  *       $this->tblFields = array(
  *           'id'        => LOAD_READ,
@@ -32,6 +31,7 @@ class MY_Model extends CI_Model{
     
     public function __construct(){
         parent::__construct();
+        $this->config();
     }
     
     function __destruct() {
@@ -41,7 +41,14 @@ class MY_Model extends CI_Model{
         }
     }
     
-    public function init(){
+    /**
+     * Redefine this function if you want to link database fields
+     */
+    protected function config(){
+        
+    }
+    
+    public function init($fields){
         
     }
     
