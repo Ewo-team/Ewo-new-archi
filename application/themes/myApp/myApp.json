@@ -1,0 +1,8 @@
+{
+    "name"          : "myApp",
+    "description"   : "classical version of the site",
+    "renderers"     : [
+        "default",
+        "ajax"
+    ]
+}

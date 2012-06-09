@@ -1,0 +1,11 @@
+{
+    "name"          : "mobileMyApp",
+    "description"   : "mobile version of the site",
+    "renderers"     : [
+        {
+            "name"      : "default",
+            "jsLoad"    : ["jquery.mobile.min"]
+        },
+        "ajax"
+    ]
+}
