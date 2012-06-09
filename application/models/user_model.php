@@ -6,10 +6,11 @@ class User_model extends MY_Model{
         parent::__construct();
         $this->tblName = 'users';
         $this->tblFields = array(
-            'id'        => LOAD_READ,
-            'name'      => LOAD_WREAD,
-            'password'  => LOAD_WREAD,
-            'mail'      => LOAD_WREAD);
+            'id'        => self::LOAD_READ,
+            'name'      => self::LOAD_WREAD,
+            'password'  => self::LOAD_WREAD,
+            'mail'      => self::LOAD_WREAD);
     }
+    
 }
 ?>

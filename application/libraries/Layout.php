@@ -13,7 +13,6 @@ class Layout {
     public function __construct($params) {
         $this->CI = & get_instance();
 
-        $this->CI->load->helper('assets');
 
         $this->var['output'] = '';
         $this->var['title'] = ucfirst($this->CI->router->fetch_method()) . ' - ' . ucfirst($this->CI->router->fetch_class());

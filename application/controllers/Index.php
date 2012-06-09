@@ -10,6 +10,10 @@ class Index extends MY_Controller {
         
         $this->log_lvl = MY_Controller::LOG_LVL_OSEF;
         $this->load->helper(array('form'));
+        $this->load->model('user_model', 'user');
+        
+        $this->user->test;
+        $this->user->name;
     }
     
     public function index(){

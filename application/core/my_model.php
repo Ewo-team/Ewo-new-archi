@@ -27,22 +27,73 @@ class MY_Model extends CI_Model{
     
     protected $tblName      = 'dummy';
     protected $tblFields    = array();
-    protected $fields       = array();
+    protected $fields       = null;
+    protected $changed      = false;
     
     public function __construct(){
         parent::__construct();
     }
     
     function __destruct() {
+        if($this->changed){
+            log_message('info', 'object changed, save it');
+            $this->save();
+        }
+    }
+    
+    public function init(){
+        
     }
     
     public function __get($name){
-        
+        $methodName = 'get'.ucfirst($name);
+        //check if custom method exists
+        if(method_exists($this, $methodName)){
+            return $this->$methodName();
+        }
+        //check if bdd field mapped
+        if(isset($this->tblFields[$name]) &&
+                ($this->tblFields[$name] == self::LOAD_READ || $this->tblFields[$name] == self::LOAD_WREAD)){
+            if($this->fields == null)
+                $this->load();
+            return $this->fields[$name];
+        }
+       
+        log_message('debug', 'getter access error. Try to access to attribute `'.$name.'` in class `'.get_class($this).'`
+            Trace:
+                '.trace_to_string(debug_backtrace(),true));
+        //TODO : raise exception
+        return null;
     }
     
     public function __set($name, $value){
+        $methodName = 'set'+ucfirst($name);
+        //check if custom method exists
+        if(method_exists($this, $methodName)){
+            return $this->$methodName($value);
+        }
+        //check if bdd field mapped
+        if(isset($this->tblFields[$name]) &&
+                ($this->tblFields[$name] == self::LOAD_WRITE || $this->tblFields[$name] == self::LOAD_WREAD)){
+            if($this->fields == null)
+                $this->load();
+            
+            $this->fields[$name]    = $value;
+            $this->changed          = true;
+        }
+        log_message('debug', 'setter access error. Try to access to attribute `'.$name.'` in class `'.get_class($this).'`
+            Trace:
+                '.trace_to_string(debug_backtrace(),true));
+        //TODO : raise exception
+        return null;
+    }
+    
+    protected function load(){
         
     }
     
+    protected function save(){
+        
+    }
 }
 ?>
