@@ -5,17 +5,24 @@ if (!defined('BASEPATH'))
  * Custom model with auto bdd synchro
  * 
  * @author benjamin herbomez <benjamin.herbomez@gmail.com>
- * @example :   extends this class and redefine config function : 
- *   protected function config() {
- *       $this->tblName = 'users';
- *       $this->tblFields = array(
- *           'id'        => LOAD_READ,
- *           'name'      => LOAD_WREAD,
- *           'password'  => LOAD_WREAD,
- *           'mail'      => LOAD_WREAD);
- *   }
+ * @example :
+ *  * If your model is as a cardinality of 1, extends this class and redefine config function : 
+ *      protected function config() {
+ *          $this->tblName = array('users u');
+ *          $this->tblFields = array(
+ *              'u.id'        => LOAD_READ,
+ *              'u.name'      => LOAD_WREAD,
+ *              'u.password'  => LOAD_WREAD,
+ *              'u.mail'      => LOAD_WREAD,
+ *              'objects'     => array(
+ *                  'access'    => LOAD_READ,
+ *                  'tblName'   => array(),
+ *                  'tblFields' => array() 
+ *              ));
+ *      }
+ *  * Or juste define the attribute $tblName (as a string), declare your mapping with config function and declare attribute $bd_multiple = true;
  */
-class MY_Model extends CI_Model{
+class MY_model extends CI_Model{
     
     /**
      * database field access :
@@ -24,14 +31,20 @@ class MY_Model extends CI_Model{
     const LOAD_WRITE    = 1;    /* write only       */
     const LOAD_WREAD    = 2;    /* read and write   */
     
-    protected $tblName      = 'dummy';
-    protected $tblFields    = array();
+    protected $tblName      = null;
+    protected $tblFields    = null;
     protected $fields       = null;
     protected $changed      = false;
     
     public function __construct(){
         parent::__construct();
         $this->config();
+        //Handle dynamic model creation
+        if(func_num_args() == 3){
+            $this->tblName      = func_get_arg(0);
+            $this->tblFields    = func_get_arg(1);
+            $this->init(func_get_arg(2));
+        }
     }
     
     function __destruct() {
@@ -49,10 +62,20 @@ class MY_Model extends CI_Model{
     }
     
     public function init($fields){
-        
+        foreach($fields as $field => $value){
+            $this->fields[$field] = $value;
+        }
     }
     
     public function __get($name){
+        
+        //Check lib call
+        $CI =& get_instance();
+        //If method already exists
+        if(property_exists($CI, $name)){
+            return $CI->$name;
+        }
+
         $methodName = 'get'.ucfirst($name);
         //check if custom method exists
         if(method_exists($this, $methodName)){
@@ -95,6 +118,35 @@ class MY_Model extends CI_Model{
         return null;
     }
     
+    /**
+     * Magic method, handle call to findAll(By{x})
+     * 
+     * @param type $name
+     * @param type $args
+     * @return type 
+     */
+    function __call($name, $args){
+        if(!is_string($this->tblName) || !isset($this->bd_multiple) || $this->bd_multiple == false) //don't want complexe db access
+            return null;
+        
+        $argc = count($args);
+        
+        if ($name == 'findAll'){
+            if ($argc == 1) //where exists
+                return $this->_findAll(null, $args[0]);
+            return $this->_findAll(null, null);
+        }
+        else if (substr($name,0,9) == 'findAllBy'){
+            $field = substr($name, 9);
+            $field[0] = strtolower($field[0]);//reduce first letter
+            if ($argc == 2) //fields list exists
+                return $this->_findAll(array($field => $args[0]), $args[1]);
+            if ($argc == 1)
+                return $this->_findAll(array($field => $args[0]), null);
+            return null;
+        }
+    }
+    
     protected function load(){
         
     }
@@ -102,5 +154,49 @@ class MY_Model extends CI_Model{
     protected function save(){
         
     }
+    
+    private function _findAll($where, $fields){
+        if (isset($where) && is_array($where)){
+            $rq = $this->db;
+            if(isset($fields) && is_array($fields)){
+                $rq     = $rq->select(implode(',', $fields));
+            }
+            $result = $rq->from($this->tblName)->where($where)->get()->result();
+            echo '*'.$this->db->last_query();
+            
+            $ret = array();
+            foreach($result as $key => $entry){
+                $ret[$key] = $this->bdResult2Model($entry);
+            }
+            return $ret;
+        }
+        else{
+            $ret = array();
+            foreach($this->db->get($this->tblName)->result() as $key => $entry){
+                $ret[$key] = $this->bdResult2Model($entry);
+            }
+            return $ret;
+        }
+    }
+    
+    private function bdResult2Model($dbResult){
+        $fields     = get_object_vars($dbResult);
+        $initValues = array();
+        
+        foreach($fields as $field => $value){
+            if($this->tblFields == null || array_key_exists($field, $this->tblFields)){
+                $fields[$field]        = $this->tblFields[$field];
+                $initValues[$field]    = $value;
+            }
+            else{
+                unset($fields[$field]);
+            }
+        }
+        $ret = new MY_Model($this->tblName, $fields, $initValues);
+        return $ret;
+    }
 }
-?>
+
+/**
+ * End of file
+ */

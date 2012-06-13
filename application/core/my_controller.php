@@ -25,11 +25,16 @@ class MY_Controller extends CI_Controller {
         $this->load->library('layout', array('theme' => $this->theme));
         $this->load->model('LanguageManager_model', 'languageManager');
 
-        $this->lang->load('interface', $this->languageManager->getLanguage());
-        $this->lang->load('errors', $this->languageManager->getLanguage());
         //config
         $this->layout->addCss('bootstrap.min');
         $this->layout->addJs('bootstrap.min');
+        
+        
+        log_message('debug', "MY_Controller Class Initialized");
+    }
+    
+    protected function loadLang($file){
+        $this->lang->load($file, $this->languageManager->getLanguage());
     }
     
     /**
@@ -76,4 +81,6 @@ class MY_Controller extends CI_Controller {
     }
 }
 
-?>
+/**
+ * End of file
+ */

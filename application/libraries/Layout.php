@@ -15,7 +15,7 @@ class Layout {
 
 
         $this->var['output'] = '';
-        $this->var['title'] = ucfirst($this->CI->router->fetch_method()) . ' - ' . ucfirst($this->CI->router->fetch_class());
+        $this->var['title'] = ucfirst($this->CI->router->fetch_method());
         $this->var['charset'] = $this->CI->config->item('charset');
 
         $this->var['css'] = array();
