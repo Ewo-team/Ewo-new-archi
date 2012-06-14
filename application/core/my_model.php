@@ -4,9 +4,16 @@ if (!defined('BASEPATH'))
 /**
  * Custom model with auto bdd synchro
  * 
+ *
+ *  * If your model is as a cardinality of 1, extends this class and redefine config function (see example)
+ *  * Or juste define the attribute $tblName (as a string), declare your mapping with config function
+ *    and declare attribute $bd_multiple = true;
+ *    Now you can call functions findAll and findAllBy{x} where {x} is the property you want to use to
+ *    filter results.
+ *    You can define $resultType attribute. With this options you can se the class type of each entries 
+ *
  * @author benjamin herbomez <benjamin.herbomez@gmail.com>
  * @example :
- *  * If your model is as a cardinality of 1, extends this class and redefine config function : 
  *      protected function config() {
  *          $this->tblName = array('users u');
  *          $this->tblFields = array(
@@ -15,12 +22,12 @@ if (!defined('BASEPATH'))
  *              'u.password'  => LOAD_WREAD,
  *              'u.mail'      => LOAD_WREAD,
  *              'objects'     => array(
- *                  'access'    => LOAD_READ,
- *                  'tblName'   => array(),
- *                  'tblFields' => array() 
+ *                  'access'        => LOAD_READ,
+ *                  'resultType'    => 'SomeSubClass'
+ *                  'tblName'       => array(),
+ *                  'tblFields'     => array() 
  *              ));
  *      }
- *  * Or juste define the attribute $tblName (as a string), declare your mapping with config function and declare attribute $bd_multiple = true;
  */
 class MY_model extends CI_Model{
     
@@ -65,6 +72,14 @@ class MY_model extends CI_Model{
         foreach($fields as $field => $value){
             $this->fields[$field] = $value;
         }
+    }
+    
+    /**
+     * This function will synchronize your model with database
+     * If your model is out of date, an exception will be raised
+     */
+    public function synchronize(){
+        
     }
     
     public function __get($name){
@@ -147,14 +162,6 @@ class MY_model extends CI_Model{
         }
     }
     
-    protected function load(){
-        
-    }
-    
-    protected function save(){
-        
-    }
-    
     private function _findAll($where, $fields){
         if (isset($where) && is_array($where)){
             $rq = $this->db;
@@ -194,6 +201,14 @@ class MY_model extends CI_Model{
         }
         $ret = new MY_Model($this->tblName, $fields, $initValues);
         return $ret;
+    }
+    
+    protected function load(){
+        
+    }
+    
+    protected function save(){
+        
     }
 }
 
