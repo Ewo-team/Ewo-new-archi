@@ -3,10 +3,8 @@
 /**
  * custom model class loader 
  */
-class Model_factory{
-    private $load;
-    
-    public function load($type, $params = null){
+if(!function_exists('loadModel')){
+    function loadModel($type, $params = null){
         $CI = &get_instance();
         $CI->load->model($type, 'ret');
         
@@ -15,4 +13,4 @@ class Model_factory{
         
         return clone $CI->ret;
     }
-}
+ }

@@ -11,7 +11,7 @@ class Index extends MY_Controller {
         $this->log_lvl = MY_Controller::LOG_LVL_OSEF;
         $this->load->helper(array('form'));
         
-        $this->load->library('model_factory');
+        
         
         $this->loadLang('interface');
         $this->loadLang('errors');
@@ -22,8 +22,8 @@ class Index extends MY_Controller {
         
         //var_dump($this->news->getNews());
         
-        $user   = $this->model_factory->load('user_model',array('id' => 1));
-        $user2  = $this->model_factory->load('user_model',array('id' => 2));
+        $user   = loadModel('user_model',array('id' => 1));
+        $user2  = loadModel('user_model',array('id' => 2));
         //$user->synchronize();
         //$user2->synchronize();
        

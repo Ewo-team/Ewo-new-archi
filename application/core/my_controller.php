@@ -23,6 +23,7 @@ class MY_Controller extends CI_Controller {
             $this->theme    = 'mobileMyApp';
         }
         $this->load->library('layout', array('theme' => $this->theme));
+        $this->load->helper('model_factory');
         $this->load->model('LanguageManager_model', 'languageManager');
 
         //config
