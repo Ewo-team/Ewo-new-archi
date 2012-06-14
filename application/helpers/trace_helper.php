@@ -17,4 +17,7 @@ if (!function_exists('trace_to_string')) {
     }
 
 }
-?>
+
+/**
+ * End of file
+ */

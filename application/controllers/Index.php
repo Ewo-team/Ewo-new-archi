@@ -7,14 +7,11 @@ class Index extends MY_Controller {
 
     public function __construct() {
         parent::__construct();
-        $this->output->enable_profiler(true);
+        //$this->output->enable_profiler(true);
         $this->log_lvl = MY_Controller::LOG_LVL_OSEF;
         $this->load->helper(array('form'));
         
-        
-        $this->load->model('user_model', 'user', TRUE);
-        $this->load->model('users_model', 'users', TRUE);
-        $this->load->model('news_model', 'news');
+        $this->load->library('model_factory');
         
         $this->loadLang('interface');
         $this->loadLang('errors');
@@ -24,10 +21,20 @@ class Index extends MY_Controller {
         $this->display($this->load->view('index',null, true));
         
         //var_dump($this->news->getNews());
-        echo '<pre>';
-        var_dump($this->users->findAllByName('Kamule'));
-        echo '</pre>';
+        
+        $user   = $this->model_factory->load('user_model',array('id' => 1));
+        $user2  = $this->model_factory->load('user_model',array('id' => 2));
+        //$user->synchronize();
+        //$user2->synchronize();
+       
+        echo $user->name, ' / ', $user2->name,'<br />';
+        echo 'dummy : ',$user->dummy,'<br />';
+        $user->dummy='test';
+        echo 'dummy : ',$user->dummy;
+        
     }
 }
 
-?>
+/**
+ * End of file
+ */

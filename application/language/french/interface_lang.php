@@ -14,4 +14,7 @@ $lang['interface.form.enterPwd']    = 'entrer votre mot de passe';
  */
 $lang['interface.log.username'] = 'nom d\'utilisateur';
 $lang['interface.log.mdp']      = 'mot de passe';
-?>
+
+/**
+ * End of file
+ */

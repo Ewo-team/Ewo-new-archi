@@ -122,4 +122,6 @@ class Layout {
 
 }
 
-?>
+/**
+ * End of file
+ */

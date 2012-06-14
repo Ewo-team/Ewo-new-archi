@@ -15,4 +15,7 @@ class Users_model extends MY_model{
     }
     
 }
-?>
+
+/**
+ * End of file
+ */

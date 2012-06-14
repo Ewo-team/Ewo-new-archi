@@ -26,3 +26,7 @@ class News_Model extends CI_Model{
                     ->result();
     }
 }
+
+/**
+ * End of file
+ */

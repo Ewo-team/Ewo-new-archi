@@ -38,10 +38,11 @@ class MY_model extends CI_Model{
     const LOAD_WRITE    = 1;    /* write only       */
     const LOAD_WREAD    = 2;    /* read and write   */
     
-    protected $tblName      = null;
-    protected $tblFields    = null;
-    protected $fields       = null;
-    protected $changed      = false;
+    protected $tblName      = null;     /* name of the table                */
+    protected $tblFields    = null;     /* fields to extract from the bdd   */
+    protected $tblKey       = null;     /* unique key                       */
+    private   $fields       = null;     /* current values, internal use     */
+    protected $changed      = array();  /* Use know changed values          */
     
     public function __construct(){
         parent::__construct();
@@ -69,9 +70,10 @@ class MY_model extends CI_Model{
     }
     
     public function init($fields){
-        foreach($fields as $field => $value){
+        foreach ($fields as $field => $value){
             $this->fields[$field] = $value;
         }
+        $this->load();
     }
     
     /**
@@ -79,7 +81,20 @@ class MY_model extends CI_Model{
      * If your model is out of date, an exception will be raised
      */
     public function synchronize(){
-        
+        $newValues  = $this->load(true);
+        $errorFields = array();
+        foreach ($newValues as $key => $value){
+            // if no comflict and updatable value
+            if (!array_key_exists($key, $this->fields) ||
+                    array_key_exists($key, $this->changed) && !$this->changed[$key]){
+                $this->fields[$key] = $value;
+             }
+            else if ($value != $this->fields[$key])
+                $errorFields[] = $key;
+        }
+        if(count($errorFields)){
+            throw new SynchronizationException();
+        }
     }
     
     public function __get($name){
@@ -87,20 +102,18 @@ class MY_model extends CI_Model{
         //Check lib call
         $CI =& get_instance();
         //If method already exists
-        if(property_exists($CI, $name)){
+        if (property_exists($CI, $name)){
             return $CI->$name;
         }
 
         $methodName = 'get'.ucfirst($name);
         //check if custom method exists
-        if(method_exists($this, $methodName)){
+        if (method_exists($this, $methodName)){
             return $this->$methodName();
         }
         //check if bdd field mapped
-        if(isset($this->tblFields[$name]) &&
+        if (isset($this->tblFields[$name]) &&
                 ($this->tblFields[$name] == self::LOAD_READ || $this->tblFields[$name] == self::LOAD_WREAD)){
-            if($this->fields == null)
-                $this->load();
             return $this->fields[$name];
         }
        
@@ -114,17 +127,17 @@ class MY_model extends CI_Model{
     public function __set($name, $value){
         $methodName = 'set'+ucfirst($name);
         //check if custom method exists
-        if(method_exists($this, $methodName)){
+        if (method_exists($this, $methodName)){
             return $this->$methodName($value);
         }
         //check if bdd field mapped
-        if(isset($this->tblFields[$name]) &&
+        if (isset($this->tblFields[$name]) &&
                 ($this->tblFields[$name] == self::LOAD_WRITE || $this->tblFields[$name] == self::LOAD_WREAD)){
             if($this->fields == null)
                 $this->load();
             
             $this->fields[$name]    = $value;
-            $this->changed          = true;
+            $this->changed[$name]   = true;
         }
         log_message('debug', 'setter access error. Try to access to attribute `'.$name.'` in class `'.get_class($this).'`
             Trace:
@@ -169,7 +182,6 @@ class MY_model extends CI_Model{
                 $rq     = $rq->select(implode(',', $fields));
             }
             $result = $rq->from($this->tblName)->where($where)->get()->result();
-            echo '*'.$this->db->last_query();
             
             $ret = array();
             foreach($result as $key => $entry){
@@ -190,8 +202,8 @@ class MY_model extends CI_Model{
         $fields     = get_object_vars($dbResult);
         $initValues = array();
         
-        foreach($fields as $field => $value){
-            if($this->tblFields == null || array_key_exists($field, $this->tblFields)){
+        foreach ($fields as $field => $value){
+            if ($this->tblFields == null || array_key_exists($field, $this->tblFields)){
                 $fields[$field]        = $this->tblFields[$field];
                 $initValues[$field]    = $value;
             }
@@ -204,11 +216,48 @@ class MY_model extends CI_Model{
     }
     
     protected function load(){
+        $newValues = $this->loadToObject();
+        if (func_num_args() == 1 && is_bool(func_get_arg(0)) && func_get_arg(0) == true){//need return
+            return $newValues;
+        }
         
+        foreach ($newValues as $key => $value){
+            $this->fields[$key] = $value;
+        }
     }
     
-    protected function save(){
+    /**
+     * load data from database en return array
+     * @return type 
+     */
+    private function loadToObject(){
+        $dbObj = $this->db->from($this->tblName);
+        foreach ($this->tblKey as $value)
+            $dbObj = $dbObj->where($value, $this->fields[$value]);
         
+        $ret = $dbObj->limit(1)->get()->result();
+        return $ret[0];
+    }
+    
+    /**
+     * Save data into db
+     * @return type 
+     */
+    protected function save(){
+        //check if there is modif
+        if (count($this->changed) == 0)
+            return;
+        
+        $dbObj = $this->db;
+        //set where
+        foreach ($this->tblKey as $value)
+            $dbObj = $dbObj->where($value, $this->fields[$value]);
+        $newValues = array();
+        foreach ($this->changed as $fieldName => $fieldChanged){
+            if($fieldChanged)
+                $newValues[$fieldName] = $this->fields[$fieldName];
+        }
+        $dbObj->update($this->tblName, $newValues);
     }
 }
 
