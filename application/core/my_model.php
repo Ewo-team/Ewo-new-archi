@@ -15,18 +15,12 @@ if (!defined('BASEPATH'))
  * @author benjamin herbomez <benjamin.herbomez@gmail.com>
  * @example :
  *      protected function config() {
- *          $this->tblName = array('users u');
+ *          $this->tblName = 'users';
  *          $this->tblFields = array(
- *              'u.id'        => LOAD_READ,
- *              'u.name'      => LOAD_WREAD,
- *              'u.password'  => LOAD_WREAD,
- *              'u.mail'      => LOAD_WREAD,
- *              'objects'     => array(
- *                  'access'        => LOAD_READ,
- *                  'resultType'    => 'SomeSubClass'
- *                  'tblName'       => array(),
- *                  'tblFields'     => array() 
- *              ));
+ *              'id'        => LOAD_READ,
+ *              'name'      => LOAD_WREAD,
+ *              'password'  => LOAD_WREAD,
+ *              'mail'      => LOAD_WREAD);
  *      }
  */
 class MY_model extends CI_Model{
@@ -69,8 +63,11 @@ class MY_model extends CI_Model{
         
     }
     
-    public function init($fields){
-        foreach ($fields as $field => $value){
+    /**
+     * Init values
+     * @param $fields initials values
+     */
+    public function init($fields){foreach ($fields as $field => $value){
             $this->fields[$field] = $value;
         }
         $this->load();
@@ -78,7 +75,7 @@ class MY_model extends CI_Model{
     
     /**
      * This function will synchronize your model with database
-     * If your model is out of date, an exception will be raised
+     * If your model is out of date, an exception will be raised, otherwise, it will be saved
      */
     public function synchronize(){
         $newValues  = $this->load(true);
@@ -90,11 +87,12 @@ class MY_model extends CI_Model{
                 $this->fields[$key] = $value;
              }
             else if ($value != $this->fields[$key])
-                $errorFields[] = $key;
+                $errorFields[$key] = array('old' => $value, 'new' => $this->fields[$key]);
         }
         if(count($errorFields)){
             throw new SynchronizationException();
         }
+        $this->save();
     }
     
     public function __get($name){
@@ -231,12 +229,17 @@ class MY_model extends CI_Model{
      * @return type 
      */
     private function loadToObject(){
+        $this->doBeforeLoad();
+        
         $dbObj = $this->db->from($this->tblName);
         foreach ($this->tblKey as $value)
-            $dbObj = $dbObj->where($value, $this->fields[$value]);
+            if(is_string($value))
+                $dbObj = $dbObj->where($value, $this->fields[$value]);
         
         $ret = $dbObj->limit(1)->get()->result();
-        return $ret[0];
+        $ret = $ret[0];
+        
+        return $this->doAfterLoad($ret);
     }
     
     /**
@@ -244,6 +247,8 @@ class MY_model extends CI_Model{
      * @return type 
      */
     protected function save(){
+        $this->doBeforeSave();
+        
         //check if there is modif
         if (count($this->changed) == 0)
             return;
@@ -258,6 +263,39 @@ class MY_model extends CI_Model{
                 $newValues[$fieldName] = $this->fields[$fieldName];
         }
         $dbObj->update($this->tblName, $newValues);
+        
+        $this->doAfterSave();
+    }
+    
+    /**
+     * Call before loading
+     */
+    protected function doBeforeLoad(){
+        
+    }
+    
+    /**
+     * Call after loading
+     * 
+     * @param type $values values extracted from bdd
+     * @return type values to set
+     */
+    protected function doAfterLoad($values){
+        return $values;
+    }
+    
+    /**
+     * Call before saving
+     */
+    protected function doBeforeSave(){
+        
+    }
+    
+    /**
+     * Call after saving
+     */
+    protected function doAfterSave(){
+        
     }
 }
 
