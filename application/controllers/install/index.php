@@ -32,6 +32,7 @@ class Index extends MY_Controller{
         
         
         $this->layout->seTitle(lang('install.title'));
+        $this->layout->addJs('myApp/nav');
     }
     
     public function index(){
@@ -47,12 +48,19 @@ class Index extends MY_Controller{
     }
     
     protected function _render($step){
+        $progress = 100 * ($step / count(self::$steps));
+        $content  = $this->load->view('install/'.self::$steps[$step],null, true);
         $pageData = array(
-            'progress'      => 100 * ($step / count(self::$steps)),
+            'progress'      => $progress,
             'step'          => $step,
-            'current_page'  => $this->load->view('install/'.self::$steps[$step],null, true)
+            'content'  => $content
         );
-        $this->_display($this->load->view('install/index',$pageData, true));
+        if($this->ajax){
+            $this->_display(json_encode($pageData));
+        }
+        else{
+            $this->_display($this->load->view('install/index',$pageData, true));
+        }
     }
 }
 

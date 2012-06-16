@@ -14,7 +14,7 @@ if (!function_exists('anchor_intern')) {
      * @param type $attributes
      * @return type 
      */
-    function anchor_intern($uri, $title = '',  $target = '#content', $attributes = '') {
+    function anchor_intern($uri, $title = '',  $target = '#content', $attributes = '', $callback = false, $callbackError = false) {
         $title = (string) $title;
 
         if (!is_array($uri)) {
@@ -32,8 +32,18 @@ if (!function_exists('anchor_intern')) {
             $attributes = _parse_attributes($attributes);
         }
 
+        $options = '';
+        if($callback){
+           $options = ',\''.$callback.'\''; 
+           if($callbackError)
+                $options .= ',\''.$callbackError.'\''; 
+        }
+        
         return
-                '<a href="' . $site_url . '" onclick="anchor_intern(\'' . $site_url . '\', \'' . $target . '\');return false;" ' . $attributes . '>' . $title . '</a>';
+                '<a href="' . $site_url . '" onclick="anchor_intern(
+                    \'' . $site_url . '\',
+                    \'' . $target . '\'
+                    '.$options.');return false;" ' . $attributes . '>' . $title . '</a>';
     }
 
 }

@@ -9,4 +9,4 @@
       <button type="submit" class="btn">Submit</button>
     </div> 
 </form>
-<?= anchor_intern(site_url(array('install/index',Index::$steps[Index::STEP_DB])),  'next','#installContent');?>
+<?= anchor_intern(site_url(array('install/index',Index::$steps[Index::STEP_DB])),  'next','#installContent', '', 'installNav');?>

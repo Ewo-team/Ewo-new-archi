@@ -25,11 +25,6 @@ class MY_Controller extends CI_Controller {
         $this->load->library('layout', array('theme' => $this->theme));
         $this->load->helper('model_factory');
         $this->load->model('LanguageManager_model', 'languageManager');
-
-        //config
-        $this->layout->addCss('bootstrap.min');
-        $this->layout->addJs('bootstrap.min');
-        
         
         log_message('debug', "MY_Controller Class Initialized");
         

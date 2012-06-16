@@ -4,7 +4,8 @@
     "renderers"     : [
         {
             "name"      : "default",
-            "cssLoad"   : ["global", "myApp/style"]
+            "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min"],
+            "jsLoad"    : ["bootstrap/bootstrap.min"]
         },
         "ajax"
     ]
