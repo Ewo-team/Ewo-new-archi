@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <div id="contenu" class="container">
+        <div id="content" class="container">
             <h1><?= $title ?></h1>
                 <?= $output ?>
         </div>

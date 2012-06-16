@@ -20,6 +20,8 @@ class Index extends MY_Controller{
         self::STEP_RIGHTS     => 'rights'
     );
     
+    private $entryPoint = FALSE;
+    
     public function __construct() {
         parent::__construct();
         
@@ -32,10 +34,10 @@ class Index extends MY_Controller{
         
         
         $this->layout->seTitle(lang('install.title'));
-        $this->layout->addJs('myApp/nav');
     }
     
     public function index(){
+        $this->entryPoint = TRUE;
         $this->analyze();
     }
     
@@ -55,7 +57,7 @@ class Index extends MY_Controller{
             'step'          => $step,
             'content'  => $content
         );
-        if($this->ajax){
+        if($this->ajax && !$this->entryPoint){
             $this->_display(json_encode($pageData));
         }
         else{

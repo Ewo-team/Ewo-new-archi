@@ -5,7 +5,7 @@
         {
             "name"      : "default",
             "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min"],
-            "jsLoad"    : ["bootstrap/bootstrap.min"]
+            "jsLoad"    : ["bootstrap/bootstrap.min", "myApp/nav"]
         },
         "ajax"
     ]

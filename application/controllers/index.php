@@ -13,23 +13,11 @@ class Index extends MY_Controller {
         
         $this->_loadLang('interface');
         $this->_loadLang('errors');
+        
     }
     
     public function index(){
         $this->_display($this->load->view('index',null, true));
-        
-        //var_dump($this->news->getNews());
-        
-        $user   = loadModel('user_model',array('id' => 1));
-        $user2  = loadModel('user_model',array('id' => 2));
-        //$user->synchronize();
-        //$user2->synchronize();
-       
-        echo $user->name, ' / ', $user2->name,'<br />';
-        echo 'dummy : ',$user->dummy,'<br />';
-        $user->dummy='test';
-        echo 'dummy : ',$user->dummy;
-        
     }
 }
 
