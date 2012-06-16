@@ -2,7 +2,10 @@
     "name"          : "myApp",
     "description"   : "classical version of the site",
     "renderers"     : [
-        "default",
+        {
+            "name"      : "default",
+            "cssLoad"   : ["global", "myApp/style"]
+        },
         "ajax"
     ]
 }

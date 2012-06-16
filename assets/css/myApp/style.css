@@ -1,0 +1,17 @@
+html, body{
+    height  : 100%;
+    padding : 0;
+    margin  : 0;
+}
+body{
+    background-image    :
+        url('../imgs/logo3race2_light.png'),
+        url('../imgs/rouge.png'),
+        url('../imgs/bleu.png');
+    background-position :
+        10px 10px,
+        left bottom,
+        right bottom;
+    background-repeat   :
+        no-repeat
+}

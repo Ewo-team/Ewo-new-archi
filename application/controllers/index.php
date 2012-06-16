@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /**
- * @author Benjamin Herbomez <benjamin.herbomez@esial.com>
+ * @author Benjamin Herbomez <benjamin.herbomez@gmail.com>
  */
 class Index extends MY_Controller {
 
@@ -11,14 +11,12 @@ class Index extends MY_Controller {
         $this->log_lvl = MY_Controller::LOG_LVL_OSEF;
         $this->load->helper(array('form'));
         
-        
-        
-        $this->loadLang('interface');
-        $this->loadLang('errors');
+        $this->_loadLang('interface');
+        $this->_loadLang('errors');
     }
     
     public function index(){
-        $this->display($this->load->view('index',null, true));
+        $this->_display($this->load->view('index',null, true));
         
         //var_dump($this->news->getNews());
         

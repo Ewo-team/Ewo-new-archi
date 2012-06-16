@@ -14,17 +14,21 @@ class Layout {
         $this->CI = & get_instance();
 
 
-        $this->var['output'] = '';
-        $this->var['title'] = ucfirst($this->CI->router->fetch_method());
-        $this->var['charset'] = $this->CI->config->item('charset');
+        $this->var['output']    = '';
+        $this->var['title']     = ucfirst($this->CI->router->fetch_method());
+        $this->var['charset']   = $this->CI->config->item('charset');
 
-        $this->var['css'] = array();
-        $this->var['js'] = array();
+        $this->var['css']       = array();
+        $this->var['js']        = array();
+        $this->var['onload']    = array();
 
         foreach ($params as $param => $value) {
             if ($param == 'theme')
                 $this->seTheme($value);
         }
+        $this->loadCoreFiles();
+        
+        log_message('debug', 'Layout init');
     }
 
     public function view($name, $data = array()) {
@@ -56,8 +60,16 @@ class Layout {
             }
         }
         
+        if(property_exists($renderer, 'cssLoad')){
+            foreach ($renderer->cssLoad as $css){
+                $this->addCss($css);
+            }
+        }
+        
         $this->var['output'] .= $content;
         $this->CI->load->view('../themes/' . $this->theme . '/'.$renderer->name.'.php', $this->var);
+        
+        log_message('debug', 'Layout display');
     }
 
     public function seTitle($title) {
@@ -91,6 +103,14 @@ class Layout {
         }
         return false;
     }
+    
+    public function addOnLoad($script){
+        if (is_string($script) AND !empty($script)) {
+            $this->var['onload'][] = $script;
+            return true;
+        }
+        return false;
+    }
 
     public function seTheme($theme) {
         if (is_string($theme) AND !empty($theme) AND file_exists('./application/themes/' . $theme . '/')) {
@@ -115,9 +135,19 @@ class Layout {
                 $this->renderers[$renderer] = (object)array('name' => $renderer);
             }
             else if (is_object($renderer)){
-                 $this->renderers[$renderer->name] = $renderer;  
+                 $this->renderers[$renderer->name] = $renderer;
             }
         }
+    }
+    
+    /**
+     * Charges les fichiers css et js toujours utilisés
+     */
+    private function loadCoreFiles(){ 
+        $this->addJs('jQuery/jquery');
+        $this->addJs('jQuery/jquery.inherit');
+        $this->addJs('nav');
+        $this->addOnLoad('nav_init("'.base_url().'");');
     }
 
 }
