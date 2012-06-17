@@ -7,6 +7,11 @@
             "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min"],
             "jsLoad"    : ["bootstrap/bootstrap.min", "myApp/nav"]
         },
+        {
+            "name"      : "admin",
+            "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min"],
+            "jsLoad"    : ["bootstrap/bootstrap.min", "myApp/nav"]
+        },
         "ajax"
     ]
 }

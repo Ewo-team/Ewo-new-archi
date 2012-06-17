@@ -61,7 +61,7 @@ class Index extends MY_Controller{
             $this->_display(json_encode($pageData));
         }
         else{
-            $this->_display($this->load->view('install/index',$pageData, true));
+            $this->_display($this->load->view('install/index',$pageData, true), 'admin');
         }
     }
 }

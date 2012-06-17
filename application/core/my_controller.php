@@ -47,13 +47,14 @@ class MY_Controller extends CI_Controller {
     /**
      * Affichage d'une page type avec au centre le contenu de la variable $content
      * @param type $content 
+     * @param type $renderer 
      */
-    protected function _display($content){
+    protected function _display($content, $renderer = 'default'){
         if($this->ajax)
             $this->layout->display($content, 'ajax');
         else
             
-            $this->layout->display($content);
+            $this->layout->display($content, $renderer);
     }
     
 }
