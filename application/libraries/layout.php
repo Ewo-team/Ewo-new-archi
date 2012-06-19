@@ -21,6 +21,7 @@ class Layout {
         $this->var['css']       = array();
         $this->var['js']        = array();
         $this->var['onload']    = array();
+        
 
         foreach ($params as $param => $value) {
             if ($param == 'theme')
@@ -30,18 +31,7 @@ class Layout {
         
         log_message('debug', 'Layout init');
     }
-
-    public function view($name, $data = array()) {
-        $filename = 'themes/' . $this->theme . '/' . $name;
-        if (file_exists($filename . '.php')) {
-            $this->var['output'] .= $this->CI->load->view($filename, $data, true);
-        }
-        else {
-            $this->var['output'] .= $this->CI->load->view($name, $data, true);
-        }
-        $this->CI->load->view('../themes/' . $this->theme . '/default.php', $this->var);
-    }
-
+    
     /**
      * Affiche une page avec le renderer voulu
      * 
@@ -66,9 +56,16 @@ class Layout {
             }
         }
         
-        $this->var['output'] .= $content;
-        $this->CI->load->view('../themes/' . $this->theme . '/'.$renderer->name.'.php', $this->var);
+        if(!is_array($content))
+            $content = array('content' => $content);
         
+        $this->var['output'] = $content;
+        
+        $var =  array(
+            'output'    => $this->CI->load->view('../themes/' . $this->theme . '/'.$renderer->name.'.php', $this->var, TRUE)
+        );
+        
+        $this->CI->load->view('../themes/'.$renderer->type.'.php', $var);
         log_message('debug', 'Layout display');
     }
 
@@ -147,7 +144,7 @@ class Layout {
         $this->addJs('jQuery/jquery');
         $this->addJs('jQuery/jquery.inherit');
         $this->addJs('nav');
-        $this->addOnLoad('nav_init("'.base_url().'");');
+        $this->addOnLoad('nav_init("'.base_url().'", "#content");');
     }
 
 }

@@ -38,6 +38,7 @@ class MY_model extends CI_Model{
     private   $fields       = null;     /* current values, internal use     */
     protected $changed      = array();  /* Use know changed values          */
     
+    
     public function __construct(){
         parent::__construct();
         $this->config();
@@ -47,6 +48,7 @@ class MY_model extends CI_Model{
             $this->tblFields    = func_get_arg(1);
             $this->init(func_get_arg(2));
         }
+        ;
     }
     
     function __destruct() {

@@ -2,33 +2,33 @@
 
 if ( ! function_exists('css_url'))
 {
-	function css_url($nom)
+	function css_url($nom, $base_path = 'assets/')
 	{
-		return base_url() . 'assets/css/' . $nom . '.css';
+		return base_url() . $base_path . 'css/' . $nom . '.css';
 	}
 }
 
 if ( ! function_exists('js_url'))
 {
-	function js_url($nom)
+	function js_url($nom, $base_path = 'assets/')
 	{
-		return base_url() . 'assets/js/' . $nom . '.js';
+		return base_url() . $base_path .'js/' . $nom . '.js';
 	}
 }
 
 if ( ! function_exists('img_url'))
 {
-	function img_url($nom)
+	function img_url($nom, $base_path = 'assets/')
 	{
-		return base_url() . 'assets/images/' . $nom;
+		return base_url() . $base_path . 'images/' . $nom;
 	}
 }
 
 if ( ! function_exists('img'))
 {
-	function img($nom, $alt = '')
+	function img($nom, $alt = '', $base_path = 'assets/')
 	{
-		return '<img src="' . img_url($nom) . '" alt="' . $alt . '" />';
+		return '<img src="' . img_url($nom, $base_path) . '" alt="' . $alt . '" />';
 	}
 }
 

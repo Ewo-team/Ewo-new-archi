@@ -1,0 +1,29 @@
+body{
+    background-image    :
+        url('../imgs/logo3race2_light.png'),
+        url('../imgs/rouge.png'),
+        url('../imgs/bleu.png');
+    background-position :
+        20px 10px,
+        left bottom,
+        right bottom;
+    background-repeat   :
+        no-repeat;
+    background-attachment: fixed;
+}
+
+#content{
+    margin-top  : 150px;
+}
+
+#content > div{
+    background-color    : rgba(255,255,255,0.9);
+    border              : 1px solid rgba(0, 0, 0, 0.05);
+    border-radius       : 4px;
+    padding             : 15px;
+}
+
+h1{
+    text-align      : right;
+    padding-right   : 150px;
+}

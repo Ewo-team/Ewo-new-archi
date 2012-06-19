@@ -4,14 +4,19 @@
     "renderers"     : [
         {
             "name"      : "default",
+            "type"      : "html",
             "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min"],
             "jsLoad"    : ["bootstrap/bootstrap.min", "myApp/nav"]
         },
         {
             "name"      : "admin",
-            "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min"],
-            "jsLoad"    : ["bootstrap/bootstrap.min", "myApp/nav"]
+            "type"      : "html",
+            "cssLoad"   : ["global", "myApp/style", "bootstrap/bootstrap.min", "myApp/admin"],
+            "jsLoad"    : ["bootstrap/bootstrap.min", "myApp/nav", "jQuery/jquery.knob"]
         },
-        "ajax"
+        {
+            "name"      : "ajax",
+            "type"      : "ajax"
+        }
     ]
 }

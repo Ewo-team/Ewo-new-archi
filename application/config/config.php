@@ -318,7 +318,7 @@ $config['csrf_expire'] = 7200;
   | by the output class.  Do not 'echo' any values with compression enabled.
   |
  */
-$config['compress_output'] = TRUE;
+$config['compress_output'] = FALSE;
 
 /*
   |--------------------------------------------------------------------------
@@ -361,5 +361,19 @@ $config['rewrite_short_tags'] = TRUE;
 $config['proxy_ips'] = '';
 
 
+/*
+  |--------------------------------------------------------------------------
+  | Modular extension
+  |--------------------------------------------------------------------------
+  |
+  | If your server is behind a reverse proxy, you must whitelist the proxy IP
+  | addresses from which CodeIgniter should trust the HTTP_X_FORWARDED_FOR
+  | header in order to properly identify the visitor's IP address.
+  | Comma-delimited, e.g. '10.0.1.200,10.0.1.201'
+  |
+ */
+$config['modules_locations'] = array(
+        APPPATH.'modules/' => '../modules/',
+    );
 /* End of file config.php */
 /* Location: ./application/config/config.php */
