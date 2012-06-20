@@ -1,10 +1,13 @@
 var nav_base_url;
-var first_load = true;
+var first_load      = true;
+var need_to_store   = false;
 
 function nav_init(base_url, target){
     nav_base_url = base_url;
     window.addEventListener('popstate', function(event) {
         if(first_load){
+            first_load      = false;
+            need_to_store   = true;
             return;
         }
         if(event && event.state)
@@ -21,7 +24,7 @@ function nav_init(base_url, target){
 function anchor_intern(uri, target, callback, callbackError){
     if(uri.charAt(uri.length) != '/')
         uri += '/';
-    if( first_load ){
+    if( need_to_store ){
         if (history && history.pushState && callback) {
             var historyData = {
                     'path'          : window.location.href,
@@ -32,7 +35,7 @@ function anchor_intern(uri, target, callback, callbackError){
                 
             history.replaceState(historyData, document.title, window.location.href);
         }
-        first_load = false;
+        need_to_store = false;
     }
     navig_load(uri, target, callback, callbackError);
 }

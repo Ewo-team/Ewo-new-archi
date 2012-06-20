@@ -8,11 +8,13 @@ $lang['install.steps.analyze']  = 'Analyse';
 $lang['install.steps.database'] = 'Base de donnée';
 $lang['install.steps.rights']   = 'droit d\'accès aux fichiers';
 
-$lang['install.analyze.section.url']    = 'Emplacement';
-$lang['install.analyze.section.db']     = 'Base de donnée';
+$lang['install.analyze.section.general']    = 'Informations générales';
+$lang['install.analyze.section.db']         = 'Base de donnée';
 
 $lang['install.analyze.base_url']       = 'url de base';
+$lang['install.analyze.lang']           = 'langue par défaut';
     $lang['install.analyze.base_url.ph']    = 'ex : http://localhost/ewo/';
+    $lang['install.analyze.lang.ph']        = 'ex : french';
 
 $lang['install.analyze.db.host']        = 'Nom de la base de données';
 $lang['install.analyze.db.username']    = 'Nom d\'utilisateur';

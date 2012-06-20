@@ -7,17 +7,29 @@ form_open('', array(
     <div class="row-fluid">
         <div class="span10">
             <fieldset>
-                <legend><?= lang('install.analyze.section.url') ?></legend>
-                <div class="control-group">
-                    <label class="control-label" for="install.analyze.base_url"><?= lang('install.analyze.base_url') ?></label>
-                    <div class="controls">
-                        <input type="text" name="install.analyze.base_url"  value="<?= site_url() ?>" placeholder="<?= lang('install.analyze.base_url.ph') ?>">
-                    </div>  
+                <legend><?= lang('install.analyze.section.general') ?></legend>
+                <div class="row-fluid control-group">
+                    <div class="span6">     
+                        <div class="control-group">
+                            <label class="control-label" for="install.analyze.base_url"><?= lang('install.analyze.base_url') ?></label>
+                            <div class="controls">
+                                <input type="text" name="install.analyze.base_url"  value="<?= site_url() ?>" placeholder="<?= lang('install.analyze.base_url.ph') ?>">
+                            </div> 
+                        </div>
+                    </div>
+                    <div class="span6">     
+                        <div class="control-group">
+                            <label class="control-label" for="install.analyze.lang"><?= lang('install.analyze.lang') ?></label>
+                            <div class="controls">
+                                <input type="text" name="install.analyze.base_url"  value="<?= $this->config->item('language'); ?>" placeholder="<?= lang('install.analyze.lang.ph') ?>">
+                            </div> 
+                        </div>
+                    </span>
                 </div>
             </fieldset>
             <fieldset>
                 <legend><?= lang('install.analyze.section.db') ?></legend>
-                <div class="row-fluid">
+                <div class="row-fluid control-group">
                     <div class="span6">
                         <div class="control-group">
                             <label class="control-label" for="install.analyze.db.host"><?= lang('install.analyze.db.host') ?></label>
@@ -50,7 +62,7 @@ form_open('', array(
             </fieldset>
         </div>
         <div class="span2" >
-            <input class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false" data-readOnly="true" value="0"  data-width="150" />
+            <input class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false" data-readOnly="true" value="22"  data-width="150" />
         </div>
     </div>
     <div class="well">

@@ -30,6 +30,9 @@ class MY_Controller extends MX_Controller {
         if ($this->session->userdata('controller.lastRenderer'))
             $this->lastRenderer = $this->session->userdata('controller.lastRenderer');
         
+        $this->output->set_header("Cache-Control: no-store, no-cache, must-revalidate");
+        $this->output->set_header("Pragma: no-cache");
+        
         log_message('debug', "MY_Controller Class Initialized");
         
     }
