@@ -15,6 +15,8 @@ class MY_Controller extends MX_Controller {
     protected $langue       = null;
     protected $lastRenderer = null;
     
+    private $text_to_load = array();
+    
     function __construct(){
         parent::__construct();
          //detect ajax
@@ -25,7 +27,7 @@ class MY_Controller extends MX_Controller {
         }
         $this->load->library('layout', array('theme' => $this->theme));
         $this->load->helper('model_factory');
-        $this->load->model('LanguageManager_model', 'languageManager');
+        $this->load->model('LanguageManager_model', 'language_manager');
         
         if ($this->session->userdata('controller.lastRenderer'))
             $this->lastRenderer = $this->session->userdata('controller.lastRenderer');
@@ -38,7 +40,7 @@ class MY_Controller extends MX_Controller {
     }
     
     protected function _loadLang($file){
-        $this->lang->load($file, $this->languageManager->getLanguage());
+        $this->text_to_load[] = $file;
     }
     
     /**
@@ -58,6 +60,12 @@ class MY_Controller extends MX_Controller {
             $this->layout->display($content, $renderer);
         }
         $this->session->set_userdata('controller.lastRenderer', $renderer);
+    }
+    
+    protected function _render(){
+        foreach($this->text_to_load as $file){
+            $this->lang->load($file, $this->language_manager->getLanguage());
+        }
     }
     
     protected function  _is_entry_point($renderer){

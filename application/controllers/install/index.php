@@ -11,10 +11,12 @@ class Index extends MY_Controller{
     /**
      * déf des états
      */
-    const STEP_ANALYZE  = 0;
-    const STEP_DB       = 1;
-    const STEP_RIGHTS   = 2;
+    const STEP_INIT     = 0;
+    const STEP_ANALYZE  = 1;
+    const STEP_DB       = 2;
+    const STEP_RIGHTS   = 3;
     public static $steps       = array(
+        self::STEP_INIT       => 'init',
         self::STEP_ANALYZE    => 'analyze',
         self::STEP_DB         => 'database',
         self::STEP_RIGHTS     => 'rights'
@@ -27,6 +29,7 @@ class Index extends MY_Controller{
         $this->load->helper(array('form'));
 
         $this->load->module('progress');
+        $this->load->module('language_selector');
         
         $this->_loadLang('interface');
         $this->_loadLang('errors');
@@ -38,10 +41,16 @@ class Index extends MY_Controller{
     }
     
     public function index(){
-        $this->analyze();
+        $this->init();
     }
     
-    public function analyze(){
+    public function init(){
+        $this->_render(self::STEP_INIT);
+    }
+    
+    public function analyze($lang = null){
+        if($lang != null)
+            $this->language_manager->setLanguage($lang);
         $this->_render(self::STEP_ANALYZE, array('nbStep' => 6));
     }
     
@@ -50,6 +59,7 @@ class Index extends MY_Controller{
     }
     
     protected function _render($step, $dataContent = array()){
+        parent::_render();
         $dataContent['steps'] = self::$steps;
         $progress = 100 * ($step / count(self::$steps));
         $content  = $this->load->view('install/'.self::$steps[$step],$dataContent, true);

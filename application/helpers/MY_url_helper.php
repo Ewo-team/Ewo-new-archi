@@ -45,7 +45,29 @@ if (!function_exists('anchor_intern')) {
                     \'' . $target . '\'
                     '.$options.');return false;" ' . $attributes . '>' . $title . '</a>';
     }
+}
 
+if (!function_exists('anchor_intern_function')) {
+    function anchor_intern_function($uri, $target = '#content', $callback = false, $callbackError = false) {
+        if (!is_array($uri)) {
+            $site_url = (!preg_match('!^\w+://! i', $uri)) ? site_url($uri) : $uri;
+        }
+        else {
+            $site_url = site_url($uri);
+        }
+
+        $options = '';
+        if($callback){
+           $options = ',\''.$callback.'\''; 
+           if($callbackError)
+                $options .= ',\''.$callbackError.'\''; 
+        }
+        
+        return 'anchor_intern(
+                    \'' . $site_url . '\',
+                    \'' . $target . '\'
+                    '.$options.')';
+    }
 }
 
 /**

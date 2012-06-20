@@ -5,9 +5,12 @@
 <div class="row-fluid center-align" id="installProgressLabels">
 <?php
     foreach($steps as $s => $step_txt){
-        echo '<div class="span4"> <span class="label '.(($step > $s)
-                                                ? ' label-success'
-                                                : '').'">'.lang('install.steps.'.$step_txt).'</span></div>';
+        $addClass = '';
+        if($step > $s)
+            $addClass = ' label-success';
+        else if($step == $s)
+            $addClass = ' label-info';
+        echo '<div class="span3"> <span class="label'.$addClass.'">'.lang('install.steps.'.$step_txt).'</span></div>';
     }
 ?>
 </div>

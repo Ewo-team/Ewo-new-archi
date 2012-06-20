@@ -22,6 +22,7 @@ form_open('', array(
                             <label class="control-label" for="install.analyze.lang"><?= lang('install.analyze.lang') ?></label>
                             <div class="controls">
                                 <input type="text" name="install.analyze.base_url"  value="<?= $this->config->item('language'); ?>" placeholder="<?= lang('install.analyze.lang.ph') ?>">
+                                 <?= modules::run('progress/index', $this->language_manager, 'install.analyze.lang') ?>
                             </div> 
                         </div>
                     </span>
@@ -48,7 +49,7 @@ form_open('', array(
                         <div class="control-group">
                             <label class="control-label" for="install.analyze.db.password"><?= lang('install.analyze.db.password') ?></label>
                             <div class="controls">
-                                <input type="paddword" name="install.analyze.db.password"  value="<?= $this->db->password ?>" placeholder="<?= lang('install.analyze.db.password.ph') ?>">
+                                <input type="password" name="install.analyze.db.password"  value="<?= $this->db->password ?>" placeholder="<?= lang('install.analyze.db.password.ph') ?>">
                             </div>  
                         </div>
                         <div class="control-group">

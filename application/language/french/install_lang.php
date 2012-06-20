@@ -4,10 +4,22 @@ if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 $lang['install.title']      = 'Installation';
 $lang['install.progress']   = 'Progression';
 
+/**
+ * Nom des sections
+ */
+$lang['install.steps.init']     = 'Initialisation';
 $lang['install.steps.analyze']  = 'Analyse';
 $lang['install.steps.database'] = 'Base de donnée';
 $lang['install.steps.rights']   = 'droit d\'accès aux fichiers';
 
+/**
+ * Section init
+ */
+$lang['install.init.text']  = 'Choisissez votre langage';
+
+/**
+ * Section analyze
+ */
 $lang['install.analyze.section.general']    = 'Informations générales';
 $lang['install.analyze.section.db']         = 'Base de donnée';
 
