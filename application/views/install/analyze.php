@@ -67,12 +67,21 @@ form_open('', array(
                     </div>
                 </div>
             </fieldset>
-            <?php
-                //site_url(array('install','database','check_database'))
-            ?>
+            
+            
         </div>
         <div class="span2" >
-            <input class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false" data-readOnly="true" value="0"  data-width="150" />
+            <input id="check_progress" class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false"  value="0"  data-width="150" />
+            <?=
+                form_button(array(
+                    'content'   => lang('interface.form.valid'),
+                    'class'     => 'btn',
+                    'onclick'   => 'launchAnalyze({
+                        lang : \''.site_url(array('install','general','check_language')).'\',
+                        db: \''.site_url(array('install','database','check_database_connection')).'\'
+                    });'
+                ))    //site_url(array('install','database','check_database'))
+            ?>
         </div>
     </div>
     <div class="well center-align">

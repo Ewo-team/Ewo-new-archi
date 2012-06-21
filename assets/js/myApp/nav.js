@@ -13,14 +13,3 @@ function installNav(jsonData){
     });
     return jsonData.content;
 }
-
-function installSelectLanguageInstall(uri, id){
-    var lang = jQuery('#'+id).val();
-    if(lang != ''){
-    uri = uri+'/'+lang;
-        anchor_intern(uri, '#installContent', 'installNav');
-        //alert(uri);
-    }
-}
-
-

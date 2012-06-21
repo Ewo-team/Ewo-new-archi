@@ -33,6 +33,6 @@ class Database extends MY_Controller{
         
         $database = $this->load->database($db_config, TRUE);
         
-        die('{"return", "ok"}');
+        die('{}');
     }
 }

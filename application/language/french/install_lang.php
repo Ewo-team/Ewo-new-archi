@@ -41,7 +41,7 @@ $lang['install.analyze.db.base']        = 'Base principale';
  * Errors
  */
     
-$lang['install.error.analyze.lang_error'];
+$lang['install.error.analyze.lang_error'] = 'Cette langue n\'existe pas';
     
 /**
  * End of file
