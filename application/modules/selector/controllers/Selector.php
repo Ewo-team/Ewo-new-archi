@@ -1,19 +1,26 @@
 <?php
-
-class Language_selector extends MX_Controller{
+/**
+ * Affiche un input avec une liste d'auto comple
+ */
+class Selector extends MX_Controller{
     
     function __construct(){
         parent::__construct();
     }
     
+    /**
+     * Affiche le composant
+     * @param type $data array comprenant :
+     *          * list : list des valeures
+     *          * selected : valeur selectionnée
+     *          * id : id html
+     *          * name : name html
+     * @return html 
+     */
     public function display($data){
         
         $data   = self::_set_default($data, 'id'     , uniqid());
         $data   = self::_set_default($data, 'name'   , '');
-        
-        $data['list']       = $data['model']->getAvailableLanguages();
-        $data['selected']   = $data['model']->getLanguage();
-        unset($data['model']);
         
         return $this->load->view('view', $data);
     }

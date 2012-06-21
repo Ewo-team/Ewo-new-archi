@@ -31,11 +31,11 @@ $lang['install.analyze.lang']           = 'default language';
 $lang['install.analyze.db.host']        = 'Data base name';
 $lang['install.analyze.db.username']    = 'Data base user name';
 $lang['install.analyze.db.password']    = 'Data base password';
-$lang['install.analyze.db.table']       = 'Main table';
+$lang['install.analyze.db.base']        = 'Main base';
     $lang['install.analyze.db.host.ph']         = 'ex : ewo';
     $lang['install.analyze.db.username.ph']     = 'ex : root';
     $lang['install.analyze.db.password.ph']     = 'ex : 123456';
-    $lang['install.analyze.db.table.ph']        = 'ex : ewo';
+    $lang['install.analyze.db.base.ph']        = 'ex : ewo';
 
 
 /**

@@ -25,7 +25,7 @@ class Layout {
 
         foreach ($params as $param => $value) {
             if ($param == 'theme')
-                $this->seTheme($value);
+                $this->setTheme($value);
         }
         $this->loadCoreFiles();
         
@@ -69,7 +69,7 @@ class Layout {
         log_message('debug', 'Layout display');
     }
 
-    public function seTitle($title) {
+    public function setTitle($title) {
         if (is_string($title) AND !empty($title)) {
             $this->var['title'] = $title;
             return true;
@@ -77,7 +77,7 @@ class Layout {
         return false;
     }
 
-    public function seCharset($charset) {
+    public function setCharset($charset) {
         if (is_string($charset) AND !empty($charset)) {
             $this->var['charset'] = $charset;
             return true;
@@ -109,7 +109,7 @@ class Layout {
         return false;
     }
 
-    public function seTheme($theme) {
+    public function setTheme($theme) {
         if (is_string($theme) AND !empty($theme) AND file_exists('./application/themes/' . $theme . '/')) {
             $this->theme = $theme;
             $config = './application/themes/' . $theme . '/' . $theme . '.json';

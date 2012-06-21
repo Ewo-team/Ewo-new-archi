@@ -3,10 +3,11 @@
         <?= form_label(lang('install.init.text'),'', array(
             'for' => 'language'
         )) ?> : 
-        <?= modules::run('language_selector/display',array(
-            'model' => $this->language_manager,
-            'name'  => 'language',
-            'id'    => 'language'
+        <?= modules::run('selector/display',array(
+            'list'      => $this->language_manager->getAvailableLanguages(),
+            'selected'  => $this->language_manager->getLanguage(),
+            'name'      => 'language',
+            'id'        => 'language'
         )) ?>
         <?= form_button(array(
             'content'   => lang('interface.form.valid'),

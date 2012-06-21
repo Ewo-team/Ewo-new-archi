@@ -29,14 +29,15 @@ class Index extends MY_Controller{
         $this->load->helper(array('form'));
 
         $this->load->module('progress');
-        $this->load->module('language_selector');
+        $this->load->module('selector');
         
         $this->_loadLang('interface');
         $this->_loadLang('errors');
         $this->_loadLang('install');
         
         
-        $this->layout->seTitle(lang('install.title'));
+        $this->layout->setTitle(lang('install.title'));
+        $this->layout->addJS('install');
         
     }
     
@@ -69,6 +70,7 @@ class Index extends MY_Controller{
         $pageData = array(
             'progress'      => $progress,
             'step'          => $step,
+            'steps'         => self::$steps,
             'content'       => $content
         );
         if($this->ajax && !$entry_point){

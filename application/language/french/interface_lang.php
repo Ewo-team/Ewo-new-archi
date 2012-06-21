@@ -5,6 +5,13 @@ $lang['interface.app.name']     = 'myApp';
 
 
 /**
+ * Navigation
+ */
+
+$lang['interface.nav.previous'] = 'précédent';
+$lang['interface.nav.next']     = 'suivant';
+
+/**
  * Form en générale
  */
 

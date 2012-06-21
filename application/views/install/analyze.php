@@ -6,8 +6,8 @@ form_open('', array(
 ?>
     <div class="row-fluid">
         <div class="span10">
-            <fieldset>
-                <legend><?= lang('install.analyze.section.general') ?></legend>
+            <fieldset id=install_analyze_general">
+                <legend><?= lang('install.analyze.section.general') ?> <i></i></legend>
                 <div class="row-fluid control-group">
                     <div class="span6">     
                         <div class="control-group">
@@ -21,23 +21,27 @@ form_open('', array(
                         <div class="control-group">
                             <label class="control-label" for="install.analyze.lang"><?= lang('install.analyze.lang') ?></label>
                             <div class="controls">
-                                <input type="text" name="install.analyze.base_url"  value="<?= $this->config->item('language'); ?>" placeholder="<?= lang('install.analyze.lang.ph') ?>">
-                                 <?= modules::run('progress/index', $this->language_manager, 'install.analyze.lang') ?>
+                                <?= modules::run('selector/display',array(
+                                    'list'      => $this->language_manager->getAvailableLanguages(),
+                                    'selected'  => $this->language_manager->getLanguage(),
+                                    'name'      => 'install.analyze.lang',
+                                    'id'        => 'install_analyze_lang'
+                                )) ?>
                             </div> 
                         </div>
                     </span>
                 </div>
             </fieldset>
-            <fieldset>
-                <legend><?= lang('install.analyze.section.db') ?></legend>
+            <fieldset id="install_analyze_db">
+                <legend><?= lang('install.analyze.section.db') ?><i></i></legend>
                 <div class="row-fluid control-group">
                     <div class="span6">
-                        <div class="control-group">
-                            <label class="control-label" for="install.analyze.db.host"><?= lang('install.analyze.db.host') ?></label>
-                            <div class="controls">
-                                <input type="text" name="install.analyze.db.host" value="<?= $this->db->hostname ?>" placeholder="<?= lang('install.analyze.db.host.ph') ?>">
-                            </div>  
-                        </div>
+                        <label class="control-label" for="install.analyze.db.host"><?= lang('install.analyze.db.host') ?></label>
+                        <div class="controls">
+                            <input type="text" name="install.analyze.db.host" value="<?= $this->db->hostname ?>" placeholder="<?= lang('install.analyze.db.host.ph') ?>">
+                        </div>  
+                    </div>
+                    <div class="span6">
                         <div class="control-group">
                             <label class="control-label" for="install.analyze.db.username"><?= lang('install.analyze.db.username') ?></label>
                             <div class="controls">
@@ -45,32 +49,47 @@ form_open('', array(
                             </div>  
                         </div>
                     </div>
+                </div>
+                <div class="row-fluid control-group">
+                    <div class="span6">
+                        <label class="control-label" for="install.analyze.db.password"><?= lang('install.analyze.db.password') ?></label>
+                        <div class="controls">
+                            <input type="password" name="install.analyze.db.password"  value="<?= $this->db->password ?>" placeholder="<?= lang('install.analyze.db.password.ph') ?>">
+                        </div>  
+                    </div>
                     <div class="span6">
                         <div class="control-group">
-                            <label class="control-label" for="install.analyze.db.password"><?= lang('install.analyze.db.password') ?></label>
+                            <label class="control-label" for="install.analyze.db.base"><?= lang('install.analyze.db.base') ?></label>
                             <div class="controls">
-                                <input type="password" name="install.analyze.db.password"  value="<?= $this->db->password ?>" placeholder="<?= lang('install.analyze.db.password.ph') ?>">
-                            </div>  
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="install.analyze.db.table"><?= lang('install.analyze.db.table') ?></label>
-                            <div class="controls">
-                                <input type="text" name="install.analyze.db.table" value="<?= $this->db->database ?>" placeholder="<?= lang('install.analyze.db.table.ph') ?>">
+                                <input type="text" name="install.analyze.db.base" value="<?= $this->db->database ?>" placeholder="<?= lang('install.analyze.db.base.ph') ?>">
                             </div>  
                         </div>
                     </div>
                 </div>
             </fieldset>
+            <?php
+                //site_url(array('install','database','check_database'))
+            ?>
         </div>
         <div class="span2" >
-            <input class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false" data-readOnly="true" value="22"  data-width="150" />
+            <input class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false" data-readOnly="true" value="0"  data-width="150" />
         </div>
     </div>
-    <div class="well">
-        <button type="submit" class="btn">Submit</button>
+    <div class="well center-align">
+        <?= form_button(array(
+            'content'   => lang('interface.nav.previous'),
+            'class'     => 'btn',
+            'onclick'   => anchor_intern_function(site_url(array('install/index', Index::$steps[Index::STEP_INIT])), '#installContent', 'installNav')
+            ))
+        ?>
+        <?= form_button(array(
+            'content'   => lang('interface.nav.next'),
+            'class'     => 'btn',
+            'onclick'   => anchor_intern_function(site_url(array('install/index', Index::$steps[Index::STEP_DB])), '#installContent', 'installNav')
+            ))
+        ?>
     </div>
 <?= form_close() ?>
-<?= anchor_intern(site_url(array('install/index', Index::$steps[Index::STEP_DB])), 'next', '#installContent', '', 'installNav'); ?>
 
 <?php 
     $this->layout->addOnload('$(".knob").knob();');

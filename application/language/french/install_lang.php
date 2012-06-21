@@ -31,13 +31,18 @@ $lang['install.analyze.lang']           = 'langue par défaut';
 $lang['install.analyze.db.host']        = 'Nom de la base de données';
 $lang['install.analyze.db.username']    = 'Nom d\'utilisateur';
 $lang['install.analyze.db.password']    = 'Mot de passe';
-$lang['install.analyze.db.table']       = 'Table principale';
+$lang['install.analyze.db.base']        = 'Base principale';
     $lang['install.analyze.db.host.ph']         = 'ex : ewo';
     $lang['install.analyze.db.username.ph']     = 'ex : root';
     $lang['install.analyze.db.password.ph']     = 'ex : 123456';
-    $lang['install.analyze.db.table.ph']        = 'ex : ewo';
+    $lang['install.analyze.db.base.ph']        = 'ex : ewo';
 
-
+/**
+ * Errors
+ */
+    
+$lang['install.error.analyze.lang_error'];
+    
 /**
  * End of file
  */

@@ -1,3 +1,8 @@
+<?php
+    if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
+        die('{"error":"database","message", "'.$message.'"}');
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
