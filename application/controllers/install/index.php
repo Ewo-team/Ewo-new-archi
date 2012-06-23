@@ -56,11 +56,13 @@ class Index extends MY_Controller{
     }
     
     public function database(){
-        $this->_render(self::STEP_DB);
+        $this->load->model('install/database_model', 'database');
+        
+        $this->_render(self::STEP_DB, array('tables' => $this->database->get_tables_list()));
     }
     
     protected function _render($step, $dataContent = array()){
-        parent::_render();
+        parent::_loadLanguages();
         $dataContent['steps'] = self::$steps;
         $progress = 100 * ($step / count(self::$steps));
         $content  = $this->load->view('install/'.self::$steps[$step],$dataContent, true);

@@ -33,36 +33,52 @@
 | 				 can make your site vulnerable to SQL injection if you are using a
 | 				 multi-byte character set and are running versions lower than these.
 | 				 Sites using Latin-1 or UTF-8 database character set and collation are unaffected.
-|	['swap_pre'] A default table prefix that should be swapped with the dbprefix
+|	['swap_pre'] A development table prefix that should be swapped with the dbprefix
 |	['autoinit'] Whether or not to automatically initialize the database.
 |	['stricton'] TRUE/FALSE - forces 'Strict Mode' connections
-|							- good for ensuring strict SQL while developing
+|							- good for ensuring strict SQL while developmenteloping
 |
 | The $active_group variable lets you choose which connection group to
-| make active.  By default there is only one group (the 'default' group).
+| make active.  By development there is only one group (the 'development' group).
 |
 | The $active_record variables lets you determine whether or not to load
 | the active record class
 */
 
-$active_group = 'default';
+$active_group = ENVIRONMENT;
 $active_record = TRUE;
 
-$db['default']['hostname'] = 'localhost';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '';
-$db['default']['database'] = 'myapp';
-$db['default']['dbdriver'] = 'mysql';
-$db['default']['dbprefix'] = '';
-$db['default']['pconnect'] = TRUE;
-$db['default']['db_debug'] = TRUE;
-$db['default']['cache_on'] = FALSE;
-$db['default']['cachedir'] = '';
-$db['default']['char_set'] = 'utf8';
-$db['default']['dbcollat'] = 'utf8_general_ci';
-$db['default']['swap_pre'] = '';
-$db['default']['autoinit'] = FALSE;
-$db['default']['stricton'] = FALSE;
+$db['development']['hostname'] = 'localhost';
+$db['development']['username'] = 'root';
+$db['development']['password'] = '';
+$db['development']['database'] = 'myapp';
+$db['development']['dbdriver'] = 'mysql';
+$db['development']['dbprefix'] = '';
+$db['development']['pconnect'] = TRUE;
+$db['development']['db_debug'] = TRUE;
+$db['development']['cache_on'] = FALSE;
+$db['development']['cachedir'] = '';
+$db['development']['char_set'] = 'utf8';
+$db['development']['dbcollat'] = 'utf8_general_ci';
+$db['development']['swap_pre'] = '';
+$db['development']['autoinit'] = FALSE;
+$db['development']['stricton'] = FALSE;
+
+$db['production']['hostname'] = 'localhost';
+$db['production']['username'] = 'root';
+$db['production']['password'] = '';
+$db['production']['database'] = 'myapp';
+$db['production']['dbdriver'] = 'mysql';
+$db['production']['dbprefix'] = '';
+$db['production']['pconnect'] = TRUE;
+$db['production']['db_debug'] = FALSE;
+$db['production']['cache_on'] = FALSE;
+$db['production']['cachedir'] = '';
+$db['production']['char_set'] = 'utf8';
+$db['production']['dbcollat'] = 'utf8_general_ci';
+$db['production']['swap_pre'] = '';
+$db['production']['autoinit'] = FALSE;
+$db['production']['stricton'] = FALSE;
 
 
 /* End of file database.php */

@@ -15,7 +15,8 @@ $lang['interface.nav.next']     = 'suivant';
  * Form en générale
  */
 
-$lang['interface.form.valid'] = 'valider';
+$lang['interface.form.valid']   = 'valider';
+$lang['interface.form.update']  = 'modifier';
 
 /**
  * Form de log

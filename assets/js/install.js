@@ -16,29 +16,55 @@ function launchAnalyze(tests){
         nbTest++;
     });
     var delta = 100 / nbTest;
-    
+    var errors = new Array();
+    var valid = 0;
+    var nb = 1;
     jQuery.each(tests, function(testName, testUrl){
         var params = eval(testName+'GetData()');
+        jQuery('.'+testName+'-error').removeClass('icon-warning-sign');
         jQuery.ajax({
             url : testUrl,
             type : 'POST',
             data : params,
             async: false,
-            success : function(data){
-                jQuery("#check_progress").attr('data-readOnly','false');
-                jQuery('#check_progress').val(parseFloat(jQuery('#check_progress').val()) + delta); 
-                jQuery('#check_progress').trigger('change');
-                jQuery("#check_progress").attr('data-readOnly','true');
+            success : function(){
+                valid++;
             },
             error : function(xhr){
                 var jsonData = jQuery.parseJSON(xhr.responseText);
                 if(jsonData && jsonData.message){
-                    jQuery('.error').html(jsonData.message).addClass('alert alert-error').alert();
-                    jQuery('.error').alert();
+                    errors[testName+'-error'] =jsonData.message;
+                }
+            },
+            complete : function(){
+                if(nb++ == nbTest){
+                    analyzeComplete(errors, valid, delta);
                 }
             }
         });
     });
+}
+
+function analyzeComplete(errors, valid, delta){
+    jQuery("#check_progress").animate({
+            value: valid*delta
+        },
+        {
+        step: function() {
+            jQuery('#check_progress').trigger('change');
+        },
+        duration : 'slow'
+    });
+    
+    var errors_output = '';
+    jQuery.each(errors, function(errorClass, errorMsg){
+        errors_output += '<li>'+errorMsg+'</li>';
+        jQuery('.'+errorClass).addClass('icon-warning-sign');
+    });
+    if(errors_output != ''){
+        jQuery('.error').html('<ul>'+errors_output+'</ul>').addClass('alert alert-error').alert();
+        jQuery('.error').alert();
+    }
 }
 
 function langGetData(){

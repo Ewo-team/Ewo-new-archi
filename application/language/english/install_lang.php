@@ -37,7 +37,18 @@ $lang['install.analyze.db.base']        = 'Main base';
     $lang['install.analyze.db.password.ph']     = 'ex : 123456';
     $lang['install.analyze.db.base.ph']        = 'ex : ewo';
 
+/**
+ * Section database
+ */    
+    
+$lang['install.db.table_exists']        = 'Existing tables';
+$lang['install.db.table_not_exists']    = 'Missing tables';
 
+/**
+ * Errors
+ */
+    
+$lang['install.error.analyze.lang_error'] = 'This language does not exits';
 /**
  * End of file
  */

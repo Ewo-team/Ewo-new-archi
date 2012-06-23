@@ -38,6 +38,13 @@ $lang['install.analyze.db.base']        = 'Base principale';
     $lang['install.analyze.db.base.ph']        = 'ex : ewo';
 
 /**
+ * Section database
+ */    
+    
+$lang['install.db.table_exists']        = 'Tables existantes';
+$lang['install.db.table_not_exists']    = 'Tables manquantes';
+    
+/**
  * Errors
  */
     

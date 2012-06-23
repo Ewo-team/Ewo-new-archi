@@ -1,6 +1,9 @@
 <?php
     if(!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest'){
-        die('{"error":"general","message", "'.$message.'"}');
+        die(json_encode(array(
+            'error' => 'general',
+            'message' => $message
+        )));
     }
 ?>
 <!DOCTYPE html>

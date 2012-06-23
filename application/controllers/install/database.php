@@ -3,9 +3,15 @@
 
 class Database extends MY_Controller{
     
-    
-    public function check_database_connection(){
+    public function __construct(){
+        parent::__construct();    
         $this->load->library('form_validation');
+    }
+    
+    /**
+     * Check si les paramètres de connection donnés sont correctes
+     */
+    public function set_database_connection(){
         
         $this->form_validation->set_rules('host',   '',   'required');
         $this->form_validation->set_rules('user',   '',   'required');
@@ -33,6 +39,41 @@ class Database extends MY_Controller{
         
         $database = $this->load->database($db_config, TRUE);
         
+        $this->load->model('install/database_model', 'database');
+        $this->database->setConfig(
+                $this->input->post('host'), $this->input->post('user'),
+                $this->input->post('pswd'), $this->input->post('base'));
+        
         die('{}');
     }
+
+    public function get_tables(){
+        $this->load->model('install/database_model', 'database');
+        $jsonReturn = $this->database->get_table_list();
+        if($jsonReturn){
+            $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($jsonReturn));
+        }
+        else
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output('{"error":"missing","message":"'.  Database_model::INSTALL_JSON.' is missing"}');
+    }
+    
+    /**
+     * 
+     */
+    public function create_table(){
+        $this->form_validation->set_rules('table',   '',   'required');
+        
+        if (!$this->form_validation->run()){
+            die('{"error":"missing"}');
+        }
+        $table_name = $this->input->post('table');
+        
+        $this->load->model('install/database_model', 'database');
+        $this->database->create_table($table_name);
+    }
+    
 }

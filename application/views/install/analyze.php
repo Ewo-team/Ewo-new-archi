@@ -7,7 +7,7 @@ form_open('', array(
     <div class="row-fluid">
         <div class="span10">
             <fieldset id=install_analyze_general">
-                <legend><?= lang('install.analyze.section.general') ?> <i></i></legend>
+                <legend><?= lang('install.analyze.section.general') ?> <i class="lang-error"></i></legend>
                 <div class="row-fluid control-group">
                     <div class="span6">     
                         <div class="control-group">
@@ -33,7 +33,7 @@ form_open('', array(
                 </div>
             </fieldset>
             <fieldset id="install_analyze_db">
-                <legend><?= lang('install.analyze.section.db') ?><i></i></legend>
+                <legend><?= lang('install.analyze.section.db') ?><i class="db-error"></i></legend>
                 <div class="row-fluid control-group">
                     <div class="span6">
                         <label class="control-label" for="install.analyze.db.host"><?= lang('install.analyze.db.host') ?></label>
@@ -70,17 +70,17 @@ form_open('', array(
             
             
         </div>
-        <div class="span2" >
-            <input id="check_progress" class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false"  value="0"  data-width="150" />
+        <div class="span2 center-align" >
+            <input id="check_progress" class="knob" data-skin="tron" data-ticks="<?= $nbStep ?>" data-displayInput="false" data-readOnly="true"  value="0"  data-width="150" />
             <?=
                 form_button(array(
-                    'content'   => lang('interface.form.valid'),
+                    'content'   => lang('interface.form.update'),
                     'class'     => 'btn',
                     'onclick'   => 'launchAnalyze({
-                        lang : \''.site_url(array('install','general','check_language')).'\',
-                        db: \''.site_url(array('install','database','check_database_connection')).'\'
+                        lang : \''.site_url(array('services','general','set_language')).'\',
+                        db: \''.site_url(array('install','database','set_database_connection')).'\'
                     });'
-                ))    //site_url(array('install','database','check_database'))
+                ))
             ?>
         </div>
     </div>

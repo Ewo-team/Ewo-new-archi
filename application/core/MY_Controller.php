@@ -62,7 +62,7 @@ class MY_Controller extends MX_Controller {
         $this->session->set_userdata('controller.lastRenderer', $renderer);
     }
     
-    protected function _render(){
+    protected function _loadLanguages(){
         foreach($this->text_to_load as $file){
             $this->lang->load($file, $this->language_manager->getLanguage());
         }
