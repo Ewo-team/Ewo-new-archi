@@ -1,0 +1,7 @@
+{
+    "tables" : [
+        "news",
+        "accounts",
+        "races"
+    ]
+}
