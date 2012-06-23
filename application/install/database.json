@@ -2,6 +2,10 @@
     "tables" : [
         "news",
         "accounts",
-        "races"
+        "races",
+        "maps",
+        "objects",
+        "characters",
+        "actions"
     ]
 }
