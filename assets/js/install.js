@@ -9,14 +9,14 @@ function installSelectLanguageInstall(uri, id){
     }
 }
 
-function launchAnalyze(tests){ 
+function launchAnalyze(tests){  
     jQuery('#check_progress').val('0');
     var nbTest = 0;
     jQuery.each(tests, function(v1, v2){
         nbTest++;
     });
     var delta = 100 / nbTest;
-    var errors = new Array();
+    var errors = {};
     var valid = 0;
     var nb = 1;
     jQuery.each(tests, function(testName, testUrl){
@@ -33,7 +33,8 @@ function launchAnalyze(tests){
             error : function(xhr){
                 var jsonData = jQuery.parseJSON(xhr.responseText);
                 if(jsonData && jsonData.message){
-                    errors[testName+'-error'] =jsonData.message;
+                    //jQuery.extend(errors, {testName+'-error' : jsonData.message});
+                    errors[testName+'-error'] = jsonData.message;
                 }
             },
             complete : function(){
@@ -62,9 +63,16 @@ function analyzeComplete(errors, valid, delta){
         jQuery('.'+errorClass).addClass('icon-warning-sign');
     });
     if(errors_output != ''){
-        jQuery('.error').html('<ul>'+errors_output+'</ul>').addClass('alert alert-error').alert();
-        jQuery('.error').alert();
+        jQuery('.error').html('<div class="alert alert-error fade in out"><ul>'+errors_output+'</ul></div>').alert();
     }
+    else
+        jQuery('.error > div').alert('close');
+}
+
+function envGetData(){
+    return {
+        'env'  : jQuery('input[name="install.analyze.env"]').val()
+    };
 }
 
 function langGetData(){

@@ -31,6 +31,24 @@ form_open('', array(
                         </div>
                     </span>
                 </div>
+                <div>
+                    <div class="span6">     
+                        <div class="control-group">
+                            <label class="control-label" for="install.analyze.base_url"><?= lang('install.analyze.env') ?></label>
+                            <div class="controls">
+                                <?= modules::run('selector/display',array(
+                                    'list'      => array(
+                                        'development',
+                                        'testing',
+                                        'production'
+                                    ),
+                                    'selected'  => ENVIRONMENT,
+                                    'name'      => 'install.analyze.env',
+                                    'id'        => 'install_analyze_env'
+                                )) ?></div> 
+                        </div>
+                    </div>
+                </div>
             </fieldset>
             <fieldset id="install_analyze_db">
                 <legend><?= lang('install.analyze.section.db') ?><i class="db-error"></i></legend>
@@ -77,6 +95,7 @@ form_open('', array(
                     'content'   => lang('interface.form.update'),
                     'class'     => 'btn',
                     'onclick'   => 'launchAnalyze({
+                        env : \''.site_url(array('install','general','set_env')).'\',
                         lang : \''.site_url(array('services','general','set_language')).'\',
                         db: \''.site_url(array('install','database','set_database_connection')).'\'
                     });'

@@ -25,9 +25,25 @@ class Database_model extends CI_Model{
         return false;
     }
     
-    public function setConfig($host, $user, $password, $table){
-        $file = $this->load->file(self::DB_CONFIG, true);
-        $file = preg_replace('#$db[\''.ENVIRONMENT.'\'][\'hostname\'] = \'(.*)\';#i', '<strong>$1</strong>', $texte);
+    public function setConfig($host, $user, $password, $base){
+        $fileArray = file(self::DB_CONFIG);
+        $file = '';
+        foreach ($fileArray as $line)
+            $file .= $line;
+        $vars_to_change = array(
+            'hostname'  => $host,
+            'username'  => $user,
+            'password'  => $password,
+            'database'  => $base
+        );
+        foreach($vars_to_change as $key => $value){
+            $regex = '#\$db\[\''.ENVIRONMENT.'\'\]\[\''.$key.'\'\] = \'(.*)\';#i';
+            $file = preg_replace($regex, '$db[\''.ENVIRONMENT.'\'][\''.$key.'\'] = \''.$value.'\';', $file);
+        }
+        //Write file
+        $fp = fopen(self::DB_CONFIG, 'w');
+        fwrite($fp, $file);
+        fclose($fp);
     }
 
     /**

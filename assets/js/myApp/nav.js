@@ -1,5 +1,6 @@
 
 function installNav(jsonData){
+    jQuery('.error > div').alert('close');
     jQuery('#installProgress').css('width',jsonData.progress+"%");
     var i = 0;
     jQuery('#installProgressLabels span').each(function(){

@@ -6,7 +6,7 @@
 ))?>
 <script>
     <!--
-        $('#<?= $id ?>').typeahead({
+        jQuery('#<?= $id ?>').typeahead({
             'source' : <?= json_encode($list) ?>
         });
     -->
