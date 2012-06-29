@@ -1,14 +1,16 @@
+<div id="installDb">
     <div class="row-fluid">
         <div class=" page-header"><h3><?= lang('install.db.table_exists')?></h3></div>
     </div>
     <div class="row-fluid">
     <?php 
         $i  = 0;
+        ksort($tables);
         asort($tables);
         $tables = array_reverse($tables);
+        $error = false;
         foreach($tables as $table => $exists){
             $mod = $i % 4;
-            $error = false;
             if($mod == 0)
                echo '
     <div class="row-fluid">';
@@ -46,6 +48,16 @@
          if($mod != 3)
                 echo '
         </div>';
+         if(!$exists){
+             echo '
+        <div class="right-align" style="margin-bottom : 14px;">
+            '.form_button(array(
+            'content'   => lang('interface.form.create'),
+            'class'     => 'btn',
+            'onclick'   => 'createTables()'
+            )).'
+        </div>';
+         }
     ?>
     </div>
     <div class="well center-align">
@@ -62,3 +74,4 @@
             ))
         ?>
     </div>
+</div>

@@ -1,5 +1,7 @@
 
-
+/**
+ * Change la langue pour l'instal
+ */
 function installSelectLanguageInstall(uri, id){
     var lang = jQuery('#'+id).val();
     if(lang != ''){
@@ -9,6 +11,9 @@ function installSelectLanguageInstall(uri, id){
     }
 }
 
+/**
+ * fait l'analyse générale
+ */
 function launchAnalyze(tests){  
     jQuery('#check_progress').val('0');
     var nbTest = 0;
@@ -46,6 +51,9 @@ function launchAnalyze(tests){
     });
 }
 
+/**
+ * call back lorsque que l'analyse est finie
+ */
 function analyzeComplete(errors, valid, delta){
     jQuery("#check_progress").animate({
             value: valid*delta
@@ -69,18 +77,27 @@ function analyzeComplete(errors, valid, delta){
         jQuery('.error > div').alert('close');
 }
 
+/**
+ * données à envoyer pour l'environement
+ */
 function envGetData(){
     return {
         'env'  : jQuery('input[name="install.analyze.env"]').val()
     };
 }
 
+/**
+ * données à envoyer pour la langue
+ */
 function langGetData(){
     return {
         'lang'  : jQuery('input[name="install.analyze.lang"]').val()
     };
 }
 
+/**
+ * données à envoyer pour la bdd
+ */
 function dbGetData(){
     return {
         'host'  : jQuery('input[name="install.analyze.db.host"]').val(),
@@ -88,4 +105,13 @@ function dbGetData(){
         'pswd'  : jQuery('input[name="install.analyze.db.password"]').val(),
         'base'  : jQuery('input[name="install.analyze.db.base"]').val()
     };
+}
+
+/**
+ * Lance la créations des tables
+ */
+function createTables(){
+    jQuery('#installDb .label-important').each(function(id, element){
+        alert(jQuery.trim(jQuery(this).text()));
+    });
 }

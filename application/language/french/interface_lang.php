@@ -17,6 +17,7 @@ $lang['interface.nav.next']     = 'suivant';
 
 $lang['interface.form.valid']   = 'valider';
 $lang['interface.form.update']  = 'modifier';
+$lang['interface.form.create']  = 'créer';
 
 /**
  * Form de log
