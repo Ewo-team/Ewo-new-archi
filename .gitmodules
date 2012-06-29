@@ -1,0 +1,3 @@
+[submodule "application/modules"]
+	path = application/modules
+	url = https://github.com/Ewo-team/EWO-modules.git
