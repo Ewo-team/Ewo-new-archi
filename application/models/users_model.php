@@ -1,7 +1,7 @@
 <?php
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
-class Users_model extends MY_model{
+class Users_model extends Sync_model{
     
     protected $bd_multiple = true;
     

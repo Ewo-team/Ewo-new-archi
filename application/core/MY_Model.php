@@ -92,7 +92,7 @@ class MY_model extends CI_Model{
                 $errorFields[$key] = array('old' => $value, 'new' => $this->fields[$key]);
         }
         if(count($errorFields)){
-            throw new SynchronizationException();
+            throw new Synchronization_exception();
         }
         $this->save();
     }

@@ -1,9 +1,10 @@
 <?php
-
+ if ( ! defined('BASEPATH'))
+     exit('No direct script access allowed');
 /**
  * Fait les checks de infos générales
  */
-class General extends MY_Controller{
+class General extends Nav_controller{
   
     const INDEX_FILE = 'index.php';
     

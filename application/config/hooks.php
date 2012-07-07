@@ -10,7 +10,11 @@
 |
 */
 
-
+$hook['pre_system'] = array(
+    'function' => 'index',
+    'filename' => 'master.php',
+    'filepath' => 'modules/custom_core'
+    );
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */

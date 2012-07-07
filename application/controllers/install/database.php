@@ -1,7 +1,8 @@
 <?php
+ if ( ! defined('BASEPATH'))
+     exit('No direct script access allowed');
 
-
-class Database extends MY_Controller{
+class Database extends Nav_controller{
     
     public function __construct(){
         parent::__construct();    

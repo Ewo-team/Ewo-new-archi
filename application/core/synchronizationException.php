@@ -1,6 +1,6 @@
 <?php
 
-class SynchronizationException extends Exception{
+class Synchronization_exception extends Exception{
     static $msg = null;
     private $errorFields;
     

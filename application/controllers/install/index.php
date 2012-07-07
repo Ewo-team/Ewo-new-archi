@@ -6,7 +6,7 @@
  * Entry point for installation
  *  * @author Benjamin Herbomez <benjamin.herbomez@gmail.com>
  */
-class Index extends MY_Controller{
+class Index extends Nav_controller{
     
     /**
      * déf des états
@@ -25,7 +25,7 @@ class Index extends MY_Controller{
     public function __construct() {
         parent::__construct();
         
-        $this->log_lvl = MY_Controller::LOG_LVL_OSEF;
+        $this->log_lvl = Nav_controller::LOG_LVL_OSEF;
         $this->load->helper(array('form'));
 
         $this->load->module('progress');
